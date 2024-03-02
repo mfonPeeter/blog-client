@@ -1,3 +1,223 @@
 @tailwind base;
+
+body {
+  font-family: "Martel Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 @tailwind components;
+
+.registerAndLoginMobile-background {
+  @apply fixed w-full h-full overflow-hidden;
+}
+.registerAndLogin-skew {
+  @apply transform -skew-y-12;
+}
+.registerAndLogin-grayBackground {
+  @apply origin-top-left h-[480px] bg-slate-50 absolute top-[-300px] left-0 right-0;
+}
+.registerAndLoginBg-verticalLine-first {
+  left: 16px;
+  bottom: -200vh;
+}
+.registerAndLoginBg-verticalLine-fifth {
+  right: 16px;
+  bottom: -200vh;
+}
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 16px;
+  padding-top: 30px;
+  height: 100vh;
+}
+.register-subcontainer-left {
+  display: none;
+}
+.register-subcontainer-right {
+  width: 100%;
+  padding: 36px 18px 28px 18px;
+  margin: 0 0 24px 0;
+}
+
+.registerAndLoginBgMobile-firstLeftStripe {
+  width: 72px;
+}
+.registerAndLoginBgMobile-secondRightStripe {
+  left: calc(50% + 67px);
+}
+.registerAndLoginBgMobile-firstRightStripe,
+.registerAndLoginBgMobile-firstAndSecondRightStripeBlend {
+  left: calc(50% + 103px);
+}
+
+.register-logo,
+.register-footer {
+  align-self: start;
+}
+
+.checkmark {
+  @apply relative top-0.5 inline-block w-[17px] h-[17px] rounded-full;
+}
+.checkmark::before {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 45%;
+  top: 40%;
+  height: 35%;
+  width: 0.1rem;
+  background-color: #635bff;
+  transform: translateX(-50%) rotate(-45deg);
+  transform-origin: left bottom;
+}
+.checkmark::after {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 40%;
+  top: 31%;
+  height: 55%;
+  width: 0.1rem;
+  background-color: #635bff;
+  transform: translate(-50%, -0.2rem) rotate(45deg);
+  transform-origin: left bottom;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "\2713";
+  display: inline-block;
+  position: absolute;
+  transform: translate(-50%, -45%);
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+/* Media Queries */
+@media (min-width: 415px) {
+  .registerAndLoginBg-verticalLine-first {
+    left: calc(50% - 191px);
+  }
+  .registerAndLoginBg-verticalLine-fifth {
+    left: calc(50% + 190px);
+  }
+  .register-subcontainer-right {
+    width: 382px;
+  }
+
+  .registerAndLoginBgMobile-firstLeftStripe {
+    width: calc(50% - 191px);
+  }
+
+  .register-logo,
+  .register-footer {
+    width: 382px;
+    align-self: center;
+  }
+}
+
+@media (min-width: 880px) {
+  .registerAndLogin-skew {
+    @apply z-0 fixed top-[-250px] bottom-0 left-0 right-0;
+  }
+  .registerAndLogin-grayBackground {
+    @apply h-[1698px] top-[-1000px];
+  }
+  .registerAndLoginBg-verticalLine-first {
+    left: 16px;
+    bottom: -100vh;
+  }
+  .registerAndLoginBg-verticalLine-second {
+    left: calc(8px + 25%);
+    background-size: 1px 8px;
+  }
+  .registerAndLoginBg-verticalLine-third {
+    left: 50%;
+    background-size: 1px 8px;
+  }
+  .registerAndLoginBg-verticalLine-fourth {
+    left: calc(75% - 9px);
+    background-size: 1px 8px;
+  }
+  .registerAndLoginBg-verticalLine-fifth {
+    left: calc(100% - 16px);
+    bottom: -100vh;
+  }
+  .registerAndLoginBg-firstRightStripe {
+    left: calc(100% - 110px);
+  }
+  .registerAndLoginBg-firstLeftStripe {
+    left: -160px;
+    right: calc(100% - 16px);
+  }
+  .registerAndLoginBg-secondLeftStripe {
+    right: calc(100% - 135px);
+  }
+  .registerAndLoginBg-firstAndsecondLeftStripeBlend {
+    left: -160px;
+    right: calc(100% - 16px);
+  }
+  .register-container {
+    flex-direction: row;
+    padding-top: 56px;
+  }
+  .register-subcontainer-right {
+    min-width: 50%;
+    padding: 56px 64px;
+    @apply self-start;
+  }
+  .register-subcontainer-left {
+    display: flex;
+    flex-direction: column;
+  }
+  .register-logo,
+  .register-footer,
+  .registerAndLoginBgMobile-firstLeftStripe,
+  .registerAndLoginBgMobile-secondRightStripe,
+  .registerAndLoginBgMobile-firstRightStripe,
+  .registerAndLoginBgMobile-firstAndSecondRightStripeBlend {
+    display: none;
+  }
+}
+
+@media (min-width: 1110px) {
+  .registerAndLoginBg-verticalLine-first {
+    left: calc(50% - 540px);
+  }
+  .registerAndLoginBg-verticalLine-second {
+    left: calc(50% - 270px);
+  }
+  .registerAndLoginBg-verticalLine-fourth {
+    left: calc(50% + 269px);
+  }
+  .registerAndLoginBg-verticalLine-fifth {
+    left: calc(50% + 540px);
+  }
+  .registerAndLoginBg-firstRightStripe {
+    left: calc(50% + 430px);
+  }
+  .registerAndLoginBg-firstLeftStripe {
+    left: calc(50% - 700px);
+    right: calc(50% + 540px);
+  }
+  .registerAndLoginBg-secondLeftStripe {
+    right: calc(50% + 405px);
+  }
+  .registerAndLoginBg-firstAndsecondLeftStripeBlend {
+    left: calc(50% - 700px);
+    right: calc(50% + 540px);
+  }
+  .register-container {
+    width: 1080px;
+    margin: 0 auto;
+  }
+  .register-subcontainer-right {
+    min-width: 540px;
+  }
+}
+
 @tailwind utilities;

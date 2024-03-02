@@ -1,9 +1,11 @@
-function App() {
+import Register from "./components/Auth/Register";
+
+const App: React.FC = () => {
   return (
     <>
-      <div className="text-3xl font-bold underline">It Works!!!</div>
+      <Register />
     </>
   );
-}
+};
 
 export default App;
