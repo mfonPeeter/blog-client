@@ -1,6 +1,78 @@
-import eyeOutlineIcon from "../../assets/eye-outline.svg";
+import { useState } from "react";
+import { useFormik } from "formik";
+import warningOutlineIcon from "../../assets/warning-outline.svg";
+
+interface MyFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  privacyCheck: boolean;
+}
+
+interface ValidateValues {
+  email: string;
+  password: string | boolean;
+}
 
 const Register: React.FC = () => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [showPasswordIcon, setShowPasswordIcon] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const validate = (values: MyFormValues) => {
+    const errors: Partial<ValidateValues> = {};
+
+    if (
+      values.email &&
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "Please enter a valid email.";
+    }
+
+    if (values.password && values.password.length < 10) {
+      errors.password =
+        "Your password is not strong enough. Your password must be at least 10 characters.";
+    }
+
+    if (
+      values.firstName &&
+      values.lastName &&
+      values.email &&
+      values.password &&
+      values.privacyCheck &&
+      Object.keys(errors).length === 0
+    ) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+
+    if (values.password) {
+      setShowPasswordIcon(true);
+    } else {
+      setShowPasswordIcon(false);
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik<MyFormValues>({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      privacyCheck: false,
+    },
+    validate,
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
+      console.log("Form submitted", values);
+      setSubmitting(false);
+    },
+  });
+
   return (
     <>
       <div className="registerAndLoginMobile-background">
@@ -105,8 +177,8 @@ const Register: React.FC = () => {
             <h3 className="mb-6 text-2xl text-[#3C4257] font-bold">
               Create your Mp. account
             </h3>
-            <form>
-              <div className="flex flex-col space-y-10">
+            <form onSubmit={formik.handleSubmit}>
+              <div className="flex flex-col space-y-7">
                 <div>
                   <label
                     htmlFor="registerFnameInput"
@@ -116,10 +188,12 @@ const Register: React.FC = () => {
                   </label>
                   <input
                     type="text"
-                    name="fName"
+                    name="firstName"
                     id="registerFnameInput"
-                    //   value=""
-                    className="px-3 py-2 w-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.firstName}
+                    className="px-3 py-1.5 mb-3 w-full h-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
                   />
                 </div>
                 <div>
@@ -131,10 +205,12 @@ const Register: React.FC = () => {
                   </label>
                   <input
                     type="text"
-                    name="lName"
+                    name="lastName"
                     id="registerLnameInput"
-                    //   value=""
-                    className="px-3 py-2 w-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.lastName}
+                    className="px-3 py-1.5 mb-3 w-full h-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
                   />
                 </div>
                 <div>
@@ -148,9 +224,30 @@ const Register: React.FC = () => {
                     type="email"
                     name="email"
                     id="registerEmailInput"
-                    //   value=""
-                    className="px-3 py-2 w-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    onFocus={() => (formik.touched.email = false)}
+                    value={formik.values.email}
+                    className={`px-3 py-1.5 mb-3 w-full h-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] ${
+                      formik.touched.email && formik.errors.email
+                        ? "border-[#ff3860]"
+                        : null
+                    }`}
                   />
+                  <div>
+                    {formik.touched.email && formik.errors.email ? (
+                      <div className="flex space-x-1">
+                        <img
+                          src={warningOutlineIcon}
+                          alt="Warning"
+                          className="size-3.5"
+                        />
+                        <span className="text-xs text-[#ff3860]">
+                          {formik.errors.email}
+                        </span>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
                 <div>
                   <label
@@ -161,25 +258,45 @@ const Register: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       id="registerPasswordInput"
-                      // value=""
-                      className="px-3 py-2 mb-3 w-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      onFocus={() => (formik.touched.password = false)}
+                      value={formik.values.password}
+                      className={`px-3 py-1.5 mb-3 w-full h-full text-[#1A1F36] text-sm rounded-md outline-none border input-with-image focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] ${
+                        formik.touched.password && formik.errors.password
+                          ? "border-[#ff3860]"
+                          : null
+                      }`}
                     />
-                    <div className="hidden absolute top-1/2 right-3 -translate-y-[80%] cursor-pointer">
-                      <img
-                        src={eyeOutlineIcon}
-                        alt="show and hide password"
-                        className="size-5"
-                      />
+                    <div
+                      onClick={() => setShowPassword((prevVal) => !prevVal)}
+                      className={`password-icons top-1/2 right-3 -translate-y-[60%] cursor-pointer ${
+                        showPasswordIcon ? "absolute" : "hidden"
+                      }`}
+                    >
+                      {showPassword ? (
+                        <ion-icon name="eye-off-outline"></ion-icon>
+                      ) : (
+                        <ion-icon name="eye-outline"></ion-icon>
+                      )}
                     </div>
                   </div>
-                  <div>
-                    <span className="block mb-3 text-xs text-[#3C4257] text-transparent">
-                      Your password needs to be at least 10 characters. Include
-                      multiple words and phrases to make it more secure.
-                    </span>
+                  <div className="w-full h-11">
+                    {formik.touched.password && formik.errors.password ? (
+                      <div className="flex space-x-1">
+                        <img
+                          src={warningOutlineIcon}
+                          alt="Warning"
+                          className="size-3.5"
+                        />
+                        <span className="text-xs text-[#ff3860]">
+                          {formik.errors.password}
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -187,7 +304,8 @@ const Register: React.FC = () => {
                 <input
                   type="checkbox"
                   name="privacyCheck"
-                  // value=""
+                  checked={formik.values.privacyCheck}
+                  onChange={formik.handleChange}
                   className="appearance-none relative size-4 border p-2 rounded-md outline-none shadow-sm focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] checked:bg-[#635BFF]"
                 />
                 <label className="text-xs leading-5 text-[#697387]">
@@ -205,8 +323,10 @@ const Register: React.FC = () => {
               </div>
               <button
                 type="submit"
-                disabled
-                className="py-3 mb-7 w-full text-white bg-[#b2AEFF] rounded-lg outline-none focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
+                disabled={isButtonDisabled}
+                className={`py-3 mb-7 w-full text-white rounded-lg outline-none focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] ${
+                  isButtonDisabled ? "bg-[#b2AEFF]" : "bg-[#645BFF]"
+                }`}
               >
                 Create account
               </button>
