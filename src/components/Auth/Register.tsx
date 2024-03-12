@@ -334,7 +334,7 @@ const Register: React.FC = () => {
                 <span className="text-[#3C4257]">Have an account?</span>
                 <a
                   href=""
-                  className="ml-1 text-[#635BFF] outline-none focus:rounded-md focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)]"
+                  className="ml-1 text-[#635BFF] outline-none focus:rounded-md focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] hover:text-[#50566E]"
                 >
                   Sign in
                 </a>
