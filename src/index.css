@@ -8,6 +8,8 @@ body {
 
 @tailwind components;
 
+/* REGISTER AND LOGIN PAGE */
+
 .password-icons ion-icon {
   font-size: 20px;
   color: #bbb;
@@ -35,7 +37,8 @@ body {
   right: 16px;
   bottom: -200vh;
 }
-.register-container {
+.register-container,
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +55,11 @@ body {
   margin: 0 0 24px 0;
 }
 
+.sub-login-container {
+  width: 100%;
+  padding: 42px 18px;
+}
+
 .registerAndLoginBgMobile-firstLeftStripe {
   width: 72px;
 }
@@ -64,8 +72,14 @@ body {
 }
 
 .register-logo,
-.register-footer {
+.register-footer,
+.login-logo,
+.login-footer {
   align-self: start;
+}
+
+.login-logo {
+  padding-bottom: 24px;
 }
 
 .checkmark {
@@ -107,6 +121,8 @@ input[type="checkbox"]:checked::before {
   color: #fff;
 }
 
+/* LOGIN PAGE */
+
 /* Media Queries */
 @media (min-width: 415px) {
   .registerAndLoginBg-verticalLine-first {
@@ -115,7 +131,8 @@ input[type="checkbox"]:checked::before {
   .registerAndLoginBg-verticalLine-fifth {
     left: calc(50% + 190px);
   }
-  .register-subcontainer-right {
+  .register-subcontainer-right,
+  .sub-login-container {
     width: 382px;
   }
 
@@ -124,7 +141,9 @@ input[type="checkbox"]:checked::before {
   }
 
   .register-logo,
-  .register-footer {
+  .register-footer,
+  .login-logo,
+  .login-footer {
     width: 382px;
     align-self: center;
   }
@@ -192,9 +211,25 @@ input[type="checkbox"]:checked::before {
   .registerAndLoginBgMobile-firstAndSecondRightStripeBlend {
     display: none;
   }
+
+  .login-container {
+    padding-top: 56px;
+  }
+  .login-logo {
+    width: 50%;
+    padding-bottom: 40px;
+  }
+  .sub-login-container {
+    min-width: 50%;
+    padding: 70px 64px;
+  }
+  .login-footer {
+    width: 50%;
+  }
 }
 
 @media (min-width: 1110px) {
+  /* REGISTER AND LOGIN PAGE */
   .registerAndLoginBg-verticalLine-first {
     left: calc(50% - 540px);
   }
@@ -225,8 +260,15 @@ input[type="checkbox"]:checked::before {
     width: 1080px;
     margin: 0 auto;
   }
-  .register-subcontainer-right {
+  .register-subcontainer-right,
+  .sub-login-container {
     min-width: 540px;
+    margin: 0 auto;
+  }
+
+  .login-logo,
+  .login-footer {
+    width: 540px;
   }
 }
 
