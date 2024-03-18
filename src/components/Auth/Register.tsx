@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import warningOutlineIcon from "../../assets/warning-outline.svg";
 
-interface MyFormValues {
+import RegisterLoginLayout from "./RegisterLoginLayout";
+
+interface RegisterFormValues {
   firstName: string;
   lastName: string;
   email: string;
@@ -10,7 +12,7 @@ interface MyFormValues {
   privacyCheck: boolean;
 }
 
-interface ValidateValues {
+interface ValidateRegisterValues {
   email: string;
   password: string | boolean;
 }
@@ -20,8 +22,8 @@ const Register: React.FC = () => {
   const [showPasswordIcon, setShowPasswordIcon] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const validate = (values: MyFormValues) => {
-    const errors: Partial<ValidateValues> = {};
+  const validate = (values: RegisterFormValues) => {
+    const errors: Partial<ValidateRegisterValues> = {};
 
     if (
       values.email &&
@@ -57,7 +59,7 @@ const Register: React.FC = () => {
     return errors;
   };
 
-  const formik = useFormik<MyFormValues>({
+  const formik = useFormik<RegisterFormValues>({
     initialValues: {
       firstName: "",
       lastName: "",
@@ -75,25 +77,7 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <div className="registerAndLoginMobile-background">
-        <div className="registerAndLogin-skew">
-          <div className="registerAndLogin-grayBackground" />
-          <div className="w-[1px] bg-gray-200 absolute top-[-100vh] registerAndLoginBg-verticalLine-first" />
-          <div className="w-[1px] bg-gradient-to-b from-gray-200 to-transparent absolute top-[-100vh] bottom-[-100vh] registerAndLoginBg-verticalLine-second" />
-          <div className="w-[1px] bg-gradient-to-b from-gray-200 to-transparent absolute top-[-100vh] bottom-[-100vh] registerAndLoginBg-verticalLine-third" />
-          <div className="w-[1px] bg-gradient-to-b from-gray-200 to-transparent absolute top-[-100vh] bottom-[-100vh]  registerAndLoginBg-verticalLine-fourth" />
-          <div className="w-[1px] bg-gray-200 absolute top-[-100vh] registerAndLoginBg-verticalLine-fifth" />
-          <div className="h-10 absolute top-[668px] bg-[#80E9FF] registerAndLoginBg-firstLeftStripe" />
-          <div className="h-10 absolute top-[698px] -left-[10px] bg-[#7A73FF] registerAndLoginBg-secondLeftStripe" />
-          <div className="h-[10px] absolute top-[698px] bg-[#0048E5] registerAndLoginBg-firstAndsecondLeftStripeBlend" />
-          <div className="h-10 absolute top-[658px] -right-[10px] bg-[#7A73FF] registerAndLoginBg-firstRightStripe" />
-
-          <div className="h-10 left-0 absolute top-[180px] bg-[#7A73FF] registerAndLoginBgMobile-firstLeftStripe" />
-          <div className="h-10 w-[800px] absolute top-20 bg-[#7A73FF] registerAndLoginBgMobile-secondRightStripe" />
-          <div className="h-10 w-[126px] absolute top-[50px] bg-[#80E9FF] registerAndLoginBgMobile-firstRightStripe" />
-          <div className="h-[10px] w-[126px] absolute top-20 bg-[#0048E5] registerAndLoginBgMobile-firstAndSecondRightStripeBlend" />
-        </div>
-      </div>
+      <RegisterLoginLayout />
 
       <div className="z-10 relative register-container">
         <div className="register-logo font-bold text-[#1A1F36] text-xl mb-5 pl-[18px]">
@@ -265,7 +249,7 @@ const Register: React.FC = () => {
                       onBlur={formik.handleBlur}
                       onFocus={() => (formik.touched.password = false)}
                       value={formik.values.password}
-                      className={`px-3 py-1.5 mb-3 w-full h-full text-[#1A1F36] text-sm rounded-md outline-none border input-with-image focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] ${
+                      className={`px-3 py-1.5 mb-3 w-full h-full text-[#1A1F36] text-sm rounded-md outline-none border focus:shadow-[0px_0px_0px_3px_rgba(58,151,212,0.36)] ${
                         formik.touched.password && formik.errors.password
                           ? "border-[#ff3860]"
                           : null
